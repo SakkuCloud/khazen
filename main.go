@@ -20,11 +20,24 @@ func main() {
 	log.SetFormatter(&log.TextFormatter{
 		FullTimestamp: true,
 	})
+	if *debugMode {
+		log.Infoln("Log in debug mode!")
+		log.SetLevel(log.DebugLevel)
+	} else {
+		log.SetLevel(log.InfoLevel)
+	}
 
 	// config file
-	err := configor.Load(&config.Config, *configFile)
-	if err != nil {
-		log.Fatal(err)
+	if *debugMode {
+		err := configor.New(&configor.Config{ENVPrefix: "KHAZEN", Verbose: true}).Load(&config.Config, *configFile)
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		err := configor.New(&configor.Config{ENVPrefix: "KHAZEN"}).Load(&config.Config, *configFile)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	// log file
@@ -46,14 +59,6 @@ func main() {
 		})
 		hook.Timeout = config.SentryTimeout * time.Second
 		log.AddHook(hook)
-	}
-
-	// debug mode
-	if *debugMode {
-		log.Infoln("Log in debug mode!")
-		log.SetLevel(log.DebugLevel)
-	} else {
-		log.SetLevel(log.InfoLevel)
 	}
 
 	// run app

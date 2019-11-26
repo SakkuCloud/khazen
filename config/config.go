@@ -14,13 +14,13 @@ var Config = struct {
 
 	SentryDSN string
 
-	AccessKey string `required:"true" env:"AccessKey"`
-	SecretKey string `required:"true" env:"SecretKey"`
+	AccessKey string `required:"true"`
+	SecretKey string `required:"true"`
 
 	MySQL struct {
-		Host     string `default:"127.0.0.1" env:"MysqlHost"`
-		User     string `default:"root" env:"MysqlUser"`
-		Password string `required:"true" env:"MysqlPassword"`
-		Port     string `default:"3306" env:"MysqlPort"`
+		Host     string `default:"127.0.0.1"`
+		User     string `default:"root"`
+		Password string `required:"true"`
+		Port     string `default:"3306"`
 	}
 }{}
