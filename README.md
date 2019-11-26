@@ -38,9 +38,10 @@ $ khazen -debug=true
 ```
 
 Khazen use some options. These options are listed below.
-| key   | name        | default                |
-| ----- | ----------- | ---------------------- |
-| debug | Debug Mode  | false                  |
+
+key   | name        | default                |
+----- | ----------- | ---------------------- |
+debug | Debug Mode  | false                  |
 | c     | Config File | /etc/khazen/config.yml |
 
 For production it's better to use a Systemd service to run Khazen.
@@ -74,6 +75,7 @@ You can pass config file with:
 khazen -c config.yml
 ```
 Below table describes available config file.
+
 | config         | env                   | required | default             | describe |
 | ---------------| --------------------- | :------: | ------------------- | ------------------------------------------------------- |
 | port           | KHAZEN_PORT           | NO       | 3000                | server will run on this port                           |
