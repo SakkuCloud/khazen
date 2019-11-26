@@ -1,0 +1,17 @@
+port: 3000
+logfile: /var/log/khazen.log
+
+sentrydsn: dsn-url
+
+// required
+accesskey: my-awesome-access
+// required
+secretkey: Super$3crT
+
+mysql:
+  host: host-address
+  // must have root privileges
+  user: user
+  // required
+  password: passwd
+  port: 3306
