@@ -1,4 +1,4 @@
-# KHAZEN - A web service to work with SQL
+# KHAZEN - A web service to work with SQL database server
 
 [![N|Solid](https://avatars3.githubusercontent.com/u/44247427?s=200&v=4)](https://github.com/SakkuCloud)
 
@@ -7,14 +7,13 @@ Khazen (خازن in Persian) means Treasury Guardian.
 
 # Contents
 * [Motivations](https://github.com/SakkuCloud/khazen#motivations)
-* [How to use](https://github.com/SakkuCloud/khazen#how_to_use)
+* [How to use](https://github.com/SakkuCloud/khazen#how-to-use)
 * [Configuration](https://github.com/SakkuCloud/khazen#configuration)
 * [Endpoints](https://github.com/SakkuCloud/khazen#endpoints)
-  * [MySQL](https://github.com/SakkuCloud/khazen#mysql)
-    * [Create account](https://github.com/SakkuCloud/khazen#create_account)
-    * [Create database](https://github.com/SakkuCloud/khazen#create_database)
-    * [Execute bundle](https://github.com/SakkuCloud/khazen#execute_bundle)
-* [To do](https://github.com/SakkuCloud/khazen#to_do)
+  * [Create account](https://github.com/SakkuCloud/khazen#mysql-create-account)
+  * [Create database](https://github.com/SakkuCloud/khazen#mysql-create-database)
+  * [Execute bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
+* [To do](https://github.com/SakkuCloud/khazen#to-do)
 
 # Motivations
 In SAKKU team we have several modules that needs to make root privileged actions in database. So we need a manager to listen in endpoints and make this actions in database host to prevent issues like:
@@ -39,28 +38,28 @@ $ khazen -debug=true
 ```
 
 Khazen use some options. These options are listed below.
-| key | name | default |
-| ------ | ------ | ------ |
-| debug | Debug Mode | false |
-| c | Config File | /etc/khazen/config.yml |
+|key   |name        |default                |
+|------|------------|-----------------------|
+|debug |Debug Mode  |false                  |
+|c     |Config File |/etc/khazen/config.yml |
 
 For production it's better to use a Systemd service to run Khazen.
 A simple Systemd service shown below. Save this in `/lib/systemd/system/khazen.service` 
-```sh
-[Unit]
-Description=KHAZEN - A webservice to work with SQL
-After=network.target
-
-[Service]
-Type=simple
-Restart=on-failure
-TimeoutStopSec=10
-RestartSec=5
-ExecStart=/usr/bin/khazen
-
-[Install]
-WantedBy=multi-user.target
-```
+> ```sh
+> [Unit]
+> Description=KHAZEN - A webservice to work with SQL
+> After=network.target
+>
+> [Service]
+> Type=simple
+> Restart=on-failure
+> TimeoutStopSec=10
+> RestartSec=5
+> ExecStart=/usr/bin/khazen
+>
+> [Install]
+> WantedBy=multi-user.target
+>```
 
 Run and enable service:
 ```sh
@@ -70,23 +69,25 @@ $ systemctl start khazen
 
 # Configuration
 Khazen use both YAML format and OS Environment for config. You can see [config.yml.example](https://github.com/SakkuCloud/khazen/blob/master/config.yml.example) for a sample config file.
-You can pass config file with `khazen -c config.yml`.
+You can pass config file with:
+```sh
+khazen -c config.yml
+```
 Below table describes available config file.
-| config | env | required | default | describe |
-| ------ | ------ | ------ | ------ | ------ |
-| port | KHAZEN_PORT | NO | 3000 | server will run on this port |
-| logfile | KHAZEN_LOGFILE | NO | /var/log/khazen.log | logs will store in this file |
-| sentrydsn | KHAZEN_SENTRYDSN | NO | | DSN of Sentry |
-| accesskey | KHAZEN_ACCESSKEY | YES | | value of service http header to authorize requests |
-| secretkey | KHAZEN_SECRETKEY | YES | | value of service-key http header to authorize requests |
-| mysql host | KHAZEN_MYSQL_HOST | NO | 127.0.0.1 | MySQL database server address |
-| mysql user | KHAZEN_MYSQL_USER | NO | root | MySQL database server user |
-| mysql password | KHAZEN_MYSQL_PASSWORD | YES | | MySQL database server password |
-| mysql port | KHAZEN_MYSQL_PORT | NO | 3306 | MySQL database server port |
+|config         |env                   |required |default             |describe |
+|---------------|----------------------|---------|--------------------|-------------------------------------------------------|
+|port           |KHAZEN_PORT           |NO       |3000                |server will run on this port                           |
+|logfile        |KHAZEN_LOGFILE        |NO       |/var/log/khazen.log |logs will store in this file                           |
+|sentrydsn      |KHAZEN_SENTRYDSN      |NO       |                    |DSN of Sentry                                          |
+|accesskey      |KHAZEN_ACCESSKEY      |YES      |                    |value of service http header to authorize requests     |
+|secretkey      |KHAZEN_SECRETKEY      |YES      |                    |value of service-key http header to authorize requests |
+|mysql host     |KHAZEN_MYSQL_HOST     |NO       |127.0.0.1           |MySQL database server address                          |
+|mysql user     |KHAZEN_MYSQL_USER     |NO       |root                |MySQL database server user                             |
+|mysql password |KHAZEN_MYSQL_PASSWORD |YES      |                    |MySQL database server password                         |
+|mysql port     |KHAZEN_MYSQL_PORT     |NO       |3306                |MySQL database server port                             |
 
 # Endpoints
-### MySQL
-##### Create account
+### MySQL create account
 Creates account in MySQL database server. A complete curl requests shown below. All json attributes except *native_password* are required.
 ```sh
 curl -X POST \
@@ -106,7 +107,7 @@ curl -X POST \
 '
 ```
 
-##### Create database
+### MySQL Create database
 Creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes are required.
 ```sh
 curl -X POST \
@@ -121,7 +122,7 @@ curl -X POST \
 '
 ```
 
-##### Execute bundle
+### MySQL Execute bundle
 This bundle first creates account in MySQL database server then creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes except *native_password* are required.
 ```sh
 curl -X POST \
