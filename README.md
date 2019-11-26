@@ -38,10 +38,10 @@ $ khazen -debug=true
 ```
 
 Khazen use some options. These options are listed below.
-|key   |name        |default                |
-|------|------------|-----------------------|
-|debug |Debug Mode  |false                  |
-|c     |Config File |/etc/khazen/config.yml |
+| key   | name        | default                |
+| ----- | ----------- | ---------------------- |
+| debug | Debug Mode  | false                  |
+| c     | Config File | /etc/khazen/config.yml |
 
 For production it's better to use a Systemd service to run Khazen.
 A simple Systemd service shown below. Save this in `/lib/systemd/system/khazen.service` 
@@ -74,17 +74,17 @@ You can pass config file with:
 khazen -c config.yml
 ```
 Below table describes available config file.
-|config         |env                   |required |default             |describe |
-|---------------|----------------------|---------|--------------------|-------------------------------------------------------|
-|port           |KHAZEN_PORT           |NO       |3000                |server will run on this port                           |
-|logfile        |KHAZEN_LOGFILE        |NO       |/var/log/khazen.log |logs will store in this file                           |
-|sentrydsn      |KHAZEN_SENTRYDSN      |NO       |                    |DSN of Sentry                                          |
-|accesskey      |KHAZEN_ACCESSKEY      |YES      |                    |value of service http header to authorize requests     |
-|secretkey      |KHAZEN_SECRETKEY      |YES      |                    |value of service-key http header to authorize requests |
-|mysql host     |KHAZEN_MYSQL_HOST     |NO       |127.0.0.1           |MySQL database server address                          |
-|mysql user     |KHAZEN_MYSQL_USER     |NO       |root                |MySQL database server user                             |
-|mysql password |KHAZEN_MYSQL_PASSWORD |YES      |                    |MySQL database server password                         |
-|mysql port     |KHAZEN_MYSQL_PORT     |NO       |3306                |MySQL database server port                             |
+| config         | env                   | required | default             | describe |
+| ---------------| --------------------- | :------: | ------------------- | ------------------------------------------------------- |
+| port           | KHAZEN_PORT           | NO       | 3000                | server will run on this port                           |
+| logfile        | KHAZEN_LOGFILE        | NO       | /var/log/khazen.log | logs will store in this file                           |
+| sentrydsn      | KHAZEN_SENTRYDSN      | NO       |                     | DSN of Sentry                                          |
+| accesskey      | KHAZEN_ACCESSKEY      | YES      |                     | value of service http header to authorize requests     |
+| secretkey      | KHAZEN_SECRETKEY      | YES      |                     | value of service-key http header to authorize requests |
+| mysql host     | KHAZEN_MYSQL_HOST     | NO       | 127.0.0.1           | MySQL database server address                          |
+| mysql user     | KHAZEN_MYSQL_USER     | NO       | root                | MySQL database server user                             |
+| mysql password | KHAZEN_MYSQL_PASSWORD | YES      |                     | MySQL database server password                         |
+| mysql port     | KHAZEN_MYSQL_PORT     | NO       | 3306                | MySQL database server port                             |
 
 # Endpoints
 ### MySQL create account
