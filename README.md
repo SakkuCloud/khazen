@@ -126,7 +126,7 @@ curl -X POST \
 This bundle first creates account in MySQL database server then creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes except *native_password* are required.
 ```sh
 curl -X POST \
- https://khazen.sakku.cloud/api/mysql/account \
+ https://khazen.sakku.cloud/api/mysql/bundle \
  -H 'Content-Type: application/json' \
  -H 'service: my-awesome-accesss' \
  -H 'service-key: Super$3crT' \
