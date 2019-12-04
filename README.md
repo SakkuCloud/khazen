@@ -1,8 +1,6 @@
 # KHAZEN - A web service to work with SQL database server
 
-[![N|Solid](https://avatars3.githubusercontent.com/u/44247427?s=200&v=4)](https://github.com/SakkuCloud)
-
-Khazen is a web service that manage SQL databases such as MySQL.
+Khazen is a web service that manages SQL databases such as MySQL.
 Khazen (خازن in Persian) means Treasury Guardian.
 
 # Contents
@@ -16,9 +14,9 @@ Khazen (خازن in Persian) means Treasury Guardian.
 * [To do](https://github.com/SakkuCloud/khazen#to-do)
 
 # Motivations
-In SAKKU team we have several modules that needs to make root privileged actions in database. So we need a manager to listen in endpoints and make this actions in database host to prevent issues like:
+In SAKKU team we have several modules that need to make root privileged actions in database. So we need a manager to listen in endpoints and make these actions in database host to prevent issues like:
 - Using ROOT username and password in every module.
-- ROOT user can login out of databse localhost.
+- ROOT user can login out of database localhost.
 - No control in actions that every module can do with ROOT user.
 
 # How to use
@@ -27,7 +25,7 @@ Building from source:
 $ go build -o /usr/bin/khazen github.com/SakkuCloud/khazen
 ```
 
-Running with cli (stay foreground):
+Running with CLI (stay foreground):
 ```sh
 $ khazen
 ```
@@ -37,14 +35,14 @@ Running in debug mode:
 $ khazen -debug=true
 ```
 
-Khazen use some options. These options are listed below.
+Khazen uses some options. These options are listed below.
 
 key   | name        | default                |
 ----- | ----------- | ---------------------- |
 debug | Debug Mode  | false                  |
 | c     | Config File | /etc/khazen/config.yml |
 
-For production it's better to use a Systemd service to run Khazen.
+For production, it's better to use a Systemd service to run Khazen.
 A simple Systemd service shown below. Save this in `/lib/systemd/system/khazen.service` 
 > ```sh
 > [Unit]
@@ -69,7 +67,7 @@ $ systemctl start khazen
 ```
 
 # Configuration
-Khazen use both YAML format and OS Environment for config. You can see [config.yml.example](https://github.com/SakkuCloud/khazen/blob/master/config.yml.example) for a sample config file.
+Khazen uses both YAML format and OS Environment for config. You can see [config.yml.example](https://github.com/SakkuCloud/khazen/blob/master/config.yml.example) for a sample config file.
 You can pass config file with:
 ```sh
 khazen -c config.yml
@@ -128,7 +126,7 @@ curl -X POST \
 This bundle first creates account in MySQL database server then creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes except *native_password* are required.
 ```sh
 curl -X POST \
- https://khazen.sakku.cloud/api/mysql/account \
+ https://khazen.sakku.cloud/api/mysql/bundle \
  -H 'Content-Type: application/json' \
  -H 'service: my-awesome-accesss' \
  -H 'service-key: Super$3crT' \
