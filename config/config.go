@@ -5,7 +5,7 @@ import "time"
 const (
 	SentryTimeout time.Duration = 10
 
-	InvalidArgsMessage string = "invalid args"
+	DataBaseDriverName string = "mysql"
 )
 
 var Config = struct {
