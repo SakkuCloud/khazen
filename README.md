@@ -1,4 +1,4 @@
-# KHAZEN - A web service to work with SQL database server
+# Khazen - A web service to work with SQL database server
 
 Khazen is a web service that manages SQL databases such as MySQL.
 Khazen (خازن in Persian) means Treasury Guardian.
@@ -11,6 +11,7 @@ Khazen (خازن in Persian) means Treasury Guardian.
   * [Create account](https://github.com/SakkuCloud/khazen#mysql-create-account)
   * [Create database](https://github.com/SakkuCloud/khazen#mysql-create-database)
   * [Execute bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
+  * [Health](https://github.com/SakkuCloud/khazen#health)
 * [To do](https://github.com/SakkuCloud/khazen#to-do)
 
 # Motivations
@@ -146,6 +147,13 @@ curl -X POST \
 }
 }
 '
+```
+
+### Health
+Get Server health (status, uptime and server time).
+```sh
+curl -X GET \
+ https://khazen.sakku.cloud/api/health 
 ```
 
 # To do
