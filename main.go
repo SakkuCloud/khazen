@@ -16,6 +16,8 @@ func main() {
 	var configFile = flag.String("c", "/etc/khazen/config.yml", "config file location (must be yaml format)")
 	flag.Parse()
 
+	config.StartTime = time.Now()
+
 	// log
 	log.SetFormatter(&log.TextFormatter{
 		FullTimestamp: true,

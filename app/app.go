@@ -28,9 +28,16 @@ func (a *App) Init() {
 func (a *App) setRouters() {
 	APISubRouter := a.Router.PathPrefix("/api").Subrouter()
 
+	APISubRouter.HandleFunc("/health", a.GetHealth).Methods("GET")
+
 	APISubRouter.HandleFunc("/mysql/bundle", a.ExecMySQLBundle).Methods("POST")
 	APISubRouter.HandleFunc("/mysql/account", a.CreateMySQLAccount).Methods("POST")
 	APISubRouter.HandleFunc("/mysql/database", a.CreateMySQLDatabase).Methods("POST")
+}
+
+// HEALTH
+func (a *App) GetHealth(w http.ResponseWriter, r *http.Request) {
+	handler.GetHealth(w, r)
 }
 
 // MYSQL

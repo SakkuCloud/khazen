@@ -8,6 +8,8 @@ const (
 	DataBaseDriverName string = "mysql"
 )
 
+var StartTime time.Time
+
 var Config = struct {
 	Port    string `default:"3000"`
 	LogFile string `default:"/var/log/khazen.log"`
