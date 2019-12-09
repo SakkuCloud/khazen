@@ -8,9 +8,10 @@ Khazen (خازن in Persian) means Treasury Guardian.
 * [How to use](https://github.com/SakkuCloud/khazen#how-to-use)
 * [Configuration](https://github.com/SakkuCloud/khazen#configuration)
 * [Endpoints](https://github.com/SakkuCloud/khazen#endpoints)
-  * [Create account](https://github.com/SakkuCloud/khazen#mysql-create-account)
-  * [Create database](https://github.com/SakkuCloud/khazen#mysql-create-database)
-  * [Execute bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
+  * [Create MySQL account](https://github.com/SakkuCloud/khazen#mysql-create-account)
+  * [Create MySQL database](https://github.com/SakkuCloud/khazen#mysql-create-database)
+  * [Delete MySQL database](https://github.com/SakkuCloud/khazen#mysql-delete-database)
+  * [Execute MySQL bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
   * [Health](https://github.com/SakkuCloud/khazen#health)
 * [To do](https://github.com/SakkuCloud/khazen#to-do)
 
@@ -121,6 +122,15 @@ curl -X POST \
 "database":"db_test_new_method_3"
 }
 '
+```
+
+### MySQL Delete database
+Deletes database in MySQL database server. A complete curl requests shown below.
+```sh
+curl -X DELETE \
+ https://khazen.sakku.cloud/api/mysql/database/<name-of-database> \
+ -H 'service: my-awesome-accesss' \
+ -H 'service-key: Super$3crT' \
 ```
 
 ### MySQL Execute bundle
