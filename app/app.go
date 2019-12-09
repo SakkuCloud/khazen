@@ -28,11 +28,12 @@ func (a *App) Init() {
 func (a *App) setRouters() {
 	APISubRouter := a.Router.PathPrefix("/api").Subrouter()
 
-	APISubRouter.HandleFunc("/health", a.GetHealth).Methods("GET")
+	APISubRouter.HandleFunc("/health", a.GetHealth).Methods(http.MethodGet)
 
-	APISubRouter.HandleFunc("/mysql/bundle", a.ExecMySQLBundle).Methods("POST")
-	APISubRouter.HandleFunc("/mysql/account", a.CreateMySQLAccount).Methods("POST")
-	APISubRouter.HandleFunc("/mysql/database", a.CreateMySQLDatabase).Methods("POST")
+	APISubRouter.HandleFunc("/mysql/bundle", a.ExecMySQLBundle).Methods(http.MethodPost)
+	APISubRouter.HandleFunc("/mysql/account", a.CreateMySQLAccount).Methods(http.MethodPost)
+	APISubRouter.HandleFunc("/mysql/database", a.CreateMySQLDatabase).Methods(http.MethodPost)
+	APISubRouter.HandleFunc("/mysql/database/{name}", a.DeleteMySQLDatabase).Methods(http.MethodDelete)
 }
 
 // HEALTH
@@ -50,6 +51,11 @@ func (a *App) CreateMySQLAccount(w http.ResponseWriter, r *http.Request) {
 func (a *App) CreateMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.CreateMySQLDatabase(w, r)
+	}
+}
+func (a *App) DeleteMySQLDatabase(w http.ResponseWriter, r *http.Request) {
+	if handler.IsAuthorized(w, r, a.Auth) {
+		handler.DeleteMySQLDatabase(w, r)
 	}
 }
 

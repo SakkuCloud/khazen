@@ -21,3 +21,8 @@ func (database *MySQLDatabase) GetSetPrivilegesQuery() (query string) {
 	query = "GRANT ALL PRIVILEGES ON " + database.Database + ".* TO '" + database.Username + "'@'%'"
 	return
 }
+
+func (database *MySQLDatabase) GetDeleteQuery() (query string) {
+	query = "DROP DATABASE IF EXISTS " + database.Database
+	return
+}

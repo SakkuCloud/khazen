@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"khazen/app/model"
 	"khazen/app/service"
 	"net/http"
@@ -39,6 +40,26 @@ func CreateMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Infof("Mysql database created, %s", database.Username)
+	log.Infof("Mysql database created, %s", database.Database)
 	respondJSON(w, http.StatusCreated, database)
+}
+
+func DeleteMySQLDatabase(w http.ResponseWriter, r *http.Request) {
+	databaseName := mux.Vars(r)["name"]
+	if databaseName == "" {
+		log.Warnf("Invalid request, empty mysql database name")
+		respondMessage(w, http.StatusBadRequest, "Invalid request, empty mysql database name")
+		return
+	}
+
+	database := model.MySQLDatabase{Database: databaseName}
+	err := service.DatabaseExecute(database.GetDeleteQuery())
+	if err != nil {
+		log.Warnf("Cannot delete mysql database, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot delete mysql database")
+		return
+	}
+
+	log.Infof("Mysql database deleted, %s", database.Database)
+	respondJSON(w, http.StatusNoContent, nil)
 }
