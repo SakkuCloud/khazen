@@ -110,7 +110,7 @@ curl -X POST \
 ```
 
 ### MySQL Create database
-Creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes are required.
+Creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes except *character_set* are required.
 ```sh
 curl -X POST \
  https://khazen.sakku.cloud/api/mysql/database \
@@ -119,7 +119,8 @@ curl -X POST \
  -H 'service-key: Super$3crT' \
  -d '{
 "username":"test_user_for_new_method_3",
-"database":"db_test_new_method_3"
+"database":"db_test_new_method_3",
+"character_set":"utf8"
 }
 '
 ```
@@ -134,7 +135,7 @@ curl -X DELETE \
 ```
 
 ### MySQL Execute bundle
-This bundle first creates account in MySQL database server then creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes except *native_password* are required.
+This bundle first creates account in MySQL database server then creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes except *native_password* and *character_set* are required.
 ```sh
 curl -X POST \
  https://khazen.sakku.cloud/api/mysql/bundle \
@@ -153,7 +154,8 @@ curl -X POST \
 },
 "database":{
 "username":"test_user_for_new_method_3",
-"database":"db_test_new_method_3"
+"database":"db_test_new_method_3",
+"character_set":"utf8"
 }
 }
 '
