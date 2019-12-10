@@ -32,6 +32,7 @@ func ExecMySQLBundle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mysql.Database.SetDefaults()
 	err = service.DatabaseExecute(mysql.Database.GetCreateQuery())
 	if err != nil {
 		log.Warnf("Cannot create database in exec mysql bundle, %s", err.Error())

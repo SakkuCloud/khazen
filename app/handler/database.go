@@ -26,6 +26,7 @@ func CreateMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	database.SetDefaults()
 	err := service.DatabaseExecute(database.GetCreateQuery())
 	if err != nil {
 		log.Warnf("Cannot create mysql database, %s", err.Error())

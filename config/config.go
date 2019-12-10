@@ -6,6 +6,8 @@ const (
 	SentryTimeout time.Duration = 10
 
 	DataBaseDriverName string = "mysql"
+
+	DefaultDatabaseCharacterSet string = "utf8"
 )
 
 var StartTime time.Time

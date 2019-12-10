@@ -1,8 +1,11 @@
 package model
 
+import "khazen/config"
+
 type MySQLDatabase struct {
-	Username string `json:"username"`
-	Database string `json:"database"`
+	Username     string `json:"username"`
+	Database     string `json:"database"`
+	CharacterSet string `json:"character_set"`
 }
 
 func (database *MySQLDatabase) HasRequirements() bool {
@@ -12,8 +15,14 @@ func (database *MySQLDatabase) HasRequirements() bool {
 	return true
 }
 
+func (database *MySQLDatabase) SetDefaults() {
+	if database.CharacterSet == ""{
+		database.CharacterSet = config.DefaultDatabaseCharacterSet
+	}
+}
+
 func (database *MySQLDatabase) GetCreateQuery() (query string) {
-	query = "CREATE DATABASE IF NOT EXISTS " + database.Database
+	query = "CREATE DATABASE IF NOT EXISTS " + database.Database + " CHARACTER SET = '"+ database.CharacterSet +"'"
 	return
 }
 
