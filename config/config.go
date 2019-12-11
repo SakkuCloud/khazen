@@ -8,6 +8,12 @@ const (
 	DataBaseDriverName string = "mysql"
 
 	DefaultDatabaseCharacterSet string = "utf8"
+
+	TmpDirectory string = "/tmp/khazen"
+
+	ImportMaxFile        int64  = 100 * 1024 * 1024 // 100MB
+	ImportFileKey        string = "import_file"
+	ImportTmpFilePattern string = "import-*.sql"
 )
 
 var StartTime time.Time
@@ -20,6 +26,8 @@ var Config = struct {
 
 	AccessKey string `required:"true"`
 	SecretKey string `required:"true"`
+
+	MySQLCmd string `default:"mysql"`
 
 	MySQL struct {
 		Host     string `default:"127.0.0.1"`

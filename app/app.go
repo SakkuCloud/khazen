@@ -7,6 +7,7 @@ import (
 	"khazen/app/model"
 	"khazen/config"
 	"net/http"
+	"os"
 )
 
 type App struct {
@@ -23,6 +24,8 @@ func (a *App) Init() {
 		AccessKey: config.Config.AccessKey,
 		SecretKey: config.Config.SecretKey,
 	}
+
+	_ = os.Mkdir(config.TmpDirectory, os.ModeDir)
 }
 
 func (a *App) setRouters() {
@@ -32,8 +35,11 @@ func (a *App) setRouters() {
 
 	APISubRouter.HandleFunc("/mysql/bundle", a.ExecMySQLBundle).Methods(http.MethodPost)
 	APISubRouter.HandleFunc("/mysql/account", a.CreateMySQLAccount).Methods(http.MethodPost)
+
 	APISubRouter.HandleFunc("/mysql/database", a.CreateMySQLDatabase).Methods(http.MethodPost)
 	APISubRouter.HandleFunc("/mysql/database/{name}", a.DeleteMySQLDatabase).Methods(http.MethodDelete)
+
+	APISubRouter.HandleFunc("/mysql/import/{name}", a.ImportMySQLDatabase).Methods(http.MethodPost)
 }
 
 // HEALTH
@@ -62,6 +68,12 @@ func (a *App) DeleteMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 func (a *App) ExecMySQLBundle(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.ExecMySQLBundle(w, r)
+	}
+}
+
+func (a *App) ImportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
+	if handler.IsAuthorized(w, r, a.Auth) {
+		handler.ImportMySQLDatabase(w, r)
 	}
 }
 
