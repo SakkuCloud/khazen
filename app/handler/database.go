@@ -48,7 +48,7 @@ func CreateMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 func DeleteMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	databaseName := mux.Vars(r)["name"]
 	if databaseName == "" {
-		log.Warnf("Invalid request, empty mysql database name")
+		log.Warnf("Invalid request, empty mysql database name in DeleteMySQLDatabase")
 		respondMessage(w, http.StatusBadRequest, "Invalid request, empty mysql database name")
 		return
 	}
