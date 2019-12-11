@@ -12,7 +12,7 @@ Khazen (خازن in Persian) means Treasury Guardian.
   * [Create MySQL database](https://github.com/SakkuCloud/khazen#mysql-create-database)
   * [Delete MySQL database](https://github.com/SakkuCloud/khazen#mysql-delete-database)
   * [Execute MySQL bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
-  * [Import MySQL database](https://github.com/SakkuCloud/khazen#mysql-import-databse)
+  * [Import MySQL database](https://github.com/SakkuCloud/khazen#mysql-import-database)
   * [Health](https://github.com/SakkuCloud/khazen#health)
 * [To do](https://github.com/SakkuCloud/khazen#to-do)
 
