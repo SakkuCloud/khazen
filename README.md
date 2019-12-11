@@ -12,6 +12,7 @@ Khazen (خازن in Persian) means Treasury Guardian.
   * [Create MySQL database](https://github.com/SakkuCloud/khazen#mysql-create-database)
   * [Delete MySQL database](https://github.com/SakkuCloud/khazen#mysql-delete-database)
   * [Execute MySQL bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
+  * [Import MySQL database](https://github.com/SakkuCloud/khazen#mysql-import-databse)
   * [Health](https://github.com/SakkuCloud/khazen#health)
 * [To do](https://github.com/SakkuCloud/khazen#to-do)
 
@@ -83,6 +84,7 @@ Below table describes available config file.
 | sentrydsn      | KHAZEN_SENTRYDSN      | NO       |                     | DSN of Sentry                                          |
 | accesskey      | KHAZEN_ACCESSKEY      | YES      |                     | value of service http header to authorize requests     |
 | secretkey      | KHAZEN_SECRETKEY      | YES      |                     | value of service-key http header to authorize requests |
+| mysqlcmd       | KHAZEN_MYSQLCMD       | NO       | mysql               | mysql cmd in host. some endpoints do not use go mysql driver |
 | mysql host     | KHAZEN_MYSQL_HOST     | NO       | 127.0.0.1           | MySQL database server address                          |
 | mysql user     | KHAZEN_MYSQL_USER     | NO       | root                | MySQL database server user                             |
 | mysql password | KHAZEN_MYSQL_PASSWORD | YES      |                     | MySQL database server password                         |
@@ -159,6 +161,18 @@ curl -X POST \
 }
 }
 '
+```
+
+### MySQL Import database
+Imports database from file in MySQL database server. A complete curl requests shown below.
+**NOTE:** This endpoint use mysql cmd instead of go mysql driver.
+```sh
+curl -X POST \
+  https://khazen.sakku.cloud/api/mysql/import/<name-of-database> \
+  -H 'Content-Type: multipart/form-data' \
+  -H 'service: my-awesome-accesss' \
+  -H 'service-key:  Super$3crT' \
+  -F import_file=@<address/of/file>
 ```
 
 ### Health
