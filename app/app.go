@@ -40,6 +40,7 @@ func (a *App) setRouters() {
 	APISubRouter.HandleFunc("/mysql/database/{name}", a.DeleteMySQLDatabase).Methods(http.MethodDelete)
 
 	APISubRouter.HandleFunc("/mysql/import/{name}", a.ImportMySQLDatabase).Methods(http.MethodPost)
+	APISubRouter.HandleFunc("/mysql/export/{name}", a.ExportMySQLDatabase).Methods(http.MethodGet)
 }
 
 // HEALTH
@@ -74,6 +75,12 @@ func (a *App) ExecMySQLBundle(w http.ResponseWriter, r *http.Request) {
 func (a *App) ImportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.ImportMySQLDatabase(w, r)
+	}
+}
+
+func (a *App) ExportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
+	if handler.IsAuthorized(w, r, a.Auth) {
+		handler.ExportMySQLDatabase(w, r)
 	}
 }
 

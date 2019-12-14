@@ -1,3 +1,4 @@
 .idea/
 bin/
 config.yml
+app/service/sakku.go

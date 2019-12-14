@@ -27,7 +27,10 @@ var Config = struct {
 	AccessKey string `required:"true"`
 	SecretKey string `required:"true"`
 
-	MySQLCmd string `default:"mysql"`
+	UseSakkuService bool `default:"false"`
+
+	MySQLCmd     string `default:"mysql"`
+	MySQLDumpCmd string `default:"mysqldump"`
 
 	MySQL struct {
 		Host     string `default:"127.0.0.1"`
