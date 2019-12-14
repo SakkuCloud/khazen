@@ -25,23 +25,20 @@ func ExecMySQLBundle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := service.DatabaseExecute(mysql.Account.GetCreateQuery())
-	if err != nil {
+	if err := service.DatabaseExecute(mysql.Account.GetCreateQuery()); err != nil {
 		log.Warnf("Cannot create account in exec mysql bundle, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create account in exec mysql bundle")
 		return
 	}
 
 	mysql.Database.SetDefaults()
-	err = service.DatabaseExecute(mysql.Database.GetCreateQuery())
-	if err != nil {
+	if err := service.DatabaseExecute(mysql.Database.GetCreateQuery()); err != nil {
 		log.Warnf("Cannot create database in exec mysql bundle, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create database in exec mysql bundle")
 		return
 	}
 
-	err = service.DatabaseExecute(mysql.Database.GetSetPrivilegesQuery())
-	if err != nil {
+	if err := service.DatabaseExecute(mysql.Database.GetSetPrivilegesQuery()); err != nil {
 		log.Warnf("Cannot set privileges in exec mysql bundle, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot set privileges in exec mysql bundle")
 		return
