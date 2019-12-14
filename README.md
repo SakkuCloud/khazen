@@ -169,7 +169,7 @@ Imports database from file in MySQL database server. A complete curl requests sh
 ```sh
 curl -X POST \
   https://khazen.sakku.cloud/api/mysql/import/<name-of-database> \
-  -H 'Content-Type: multipart/form-data' \
+  -H 'Content-Type: multipart/form-data; boundary=--------------------------644186194979441205884304' \
   -H 'service: my-awesome-accesss' \
   -H 'service-key:  Super$3crT' \
   -F import_file=@<address/of/file>
