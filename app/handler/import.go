@@ -4,10 +4,10 @@ import (
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
+	"khazen/app/service"
 	"khazen/config"
 	"net/http"
 	"os"
-	"os/exec"
 )
 
 func ImportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
@@ -55,12 +55,8 @@ func ImportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cmd := config.Config.MySQLCmd + " -u " + config.Config.MySQL.User + " -p" + config.Config.MySQL.Password
-	cmd = cmd + " " + databaseName + " < " + tempFile.Name()
-	log.Debugf("ImportMySQLDatabase, cmd: %s",cmd)
-	output, err := exec.Command("sh", "-c", cmd).CombinedOutput()
-	log.Debugf("ImportMySQLDatabase, output: %s",output)
-	if err != nil {
+	cmd := config.Config.MySQLCmd + " -u " + config.Config.MySQL.User + " -p" + config.Config.MySQL.Password  + " " + databaseName + " < " + tempFile.Name()
+	if err := service.OSCommandExecute(cmd); err != nil {
 		log.Warnf("Cannot import tmp file in ImportMySQLDatabase, %s", err.Error())
 		respondMessage(w, http.StatusInternalServerError, "Cannot import file")
 		return
