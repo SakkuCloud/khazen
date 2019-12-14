@@ -27,15 +27,13 @@ func CreateMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	}
 
 	database.SetDefaults()
-	err := service.DatabaseExecute(database.GetCreateQuery())
-	if err != nil {
+	if err := service.DatabaseExecute(database.GetCreateQuery()); err != nil {
 		log.Warnf("Cannot create mysql database, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create mysql database")
 		return
 	}
 
-	err = service.DatabaseExecute(database.GetSetPrivilegesQuery())
-	if err != nil {
+	if err := service.DatabaseExecute(database.GetSetPrivilegesQuery()); err != nil {
 		log.Warnf("Cannot set privileges in database, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot set privileges in database")
 		return
@@ -54,8 +52,7 @@ func DeleteMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	}
 
 	database := model.MySQLDatabase{Database: databaseName}
-	err := service.DatabaseExecute(database.GetDeleteQuery())
-	if err != nil {
+	if err := service.DatabaseExecute(database.GetDeleteQuery()); err != nil {
 		log.Warnf("Cannot delete mysql database, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot delete mysql database")
 		return
