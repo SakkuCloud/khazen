@@ -14,6 +14,9 @@ Khazen (خازن in Persian) means Treasury Guardian.
   * [Execute MySQL bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
   * [Import MySQL database](https://github.com/SakkuCloud/khazen#mysql-import-database)
   * [Create Postgres account](https://github.com/SakkuCloud/khazen#postgres-create-account)
+  * [Create Postgres database](https://github.com/SakkuCloud/khazen#postgres-create-database)
+  * [Delete Postgres database](https://github.com/SakkuCloud/khazen#postgres-delete-database)
+  * [Execute Postgres bundle](https://github.com/SakkuCloud/khazen#postgres-execute-bundle)
   * [Health](https://github.com/SakkuCloud/khazen#health)
 * [To do](https://github.com/SakkuCloud/khazen#to-do)
 
@@ -214,6 +217,28 @@ curl -X DELETE \
  https://khazen.sakku.cloud/api/postgres/database/<name-of-database> \
  -H 'service: my-awesome-accesss' \
  -H 'service-key: Super$3crT' \
+```
+
+### Postgres Execute bundle
+This bundle first creates account in Postgres database server then creates database in Postgres database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes are required.
+```sh
+curl -X POST \
+ https://khazen.sakku.cloud/api/postgres/bundle \
+ -H 'Content-Type: application/json' \
+ -H 'service: my-awesome-accesss' \
+ -H 'service-key: Super$3crT' \
+ -d '{
+"account" : {
+"username":"test_user_for_new_method_3",
+"password":"sdsdf_234234mn_234r_3",
+"connection_limit":"10"
+},
+"database":{
+"username":"test_user_for_new_method_3",
+"database":"db_test_new_method_3"
+}
+}
+'
 ```
 
 ### Health
