@@ -44,6 +44,8 @@ func (a *App) setRouters() {
 	APISubRouter.HandleFunc("/postgres/account", a.CreatePostgresAccount).Methods(http.MethodPost)
 	APISubRouter.HandleFunc("/postgres/database", a.CreatePostgresDatabase).Methods(http.MethodPost)
 	APISubRouter.HandleFunc("/postgres/database/{name}", a.DeletePostgresDatabase).Methods(http.MethodDelete)
+	APISubRouter.HandleFunc("/postgres/import/{name}", a.ImportPostgresDatabase).Methods(http.MethodPost)
+	APISubRouter.HandleFunc("/postgres/export/{name}", a.ExportPostgresDatabase).Methods(http.MethodGet)
 }
 
 // HEALTH
@@ -102,6 +104,16 @@ func (a *App) DeletePostgresDatabase(w http.ResponseWriter, r *http.Request) {
 func (a *App) ExecPostgresBundle(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.ExecPostgresBundle(w, r)
+	}
+}
+func (a *App) ImportPostgresDatabase(w http.ResponseWriter, r *http.Request) {
+	if handler.IsAuthorized(w, r, a.Auth) {
+		handler.ImportPostgresDatabase(w, r)
+	}
+}
+func (a *App) ExportPostgresDatabase(w http.ResponseWriter, r *http.Request) {
+	if handler.IsAuthorized(w, r, a.Auth) {
+		handler.ExportPostgresDatabase(w, r)
 	}
 }
 

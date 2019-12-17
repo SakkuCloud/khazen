@@ -3,8 +3,11 @@ logfile: /var/log/khazen.log
 
 sentrydsn: dsn-url
 
-mysqlcmd
-mysqldumpcmd
+mysqlcmd: mysql
+mysqldumpcmd: mysqldump
+
+postgrescmd: psql
+postgresdumpcmd: pg_dump
 
 // required
 accesskey: my-awesome-access

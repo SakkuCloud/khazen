@@ -13,8 +13,8 @@ const (
 	ImportFileKey        string = "import_file"
 	ImportTmpFilePattern string = "import-*.sql"
 
-	SakkuUploadFileEndpoint        string = "https://api.sakku.cloud/file/user/"
-	SakkuUploadFileKeyFile         string = "file"
+	SakkuUploadFileEndpoint string = "http://api.sakku.cloud/file/user/"
+	SakkuUploadFileKeyFile  string = "file"
 )
 
 var StartTime time.Time
@@ -32,6 +32,9 @@ var Config = struct {
 
 	MySQLCmd     string `default:"mysql"`
 	MySQLDumpCmd string `default:"mysqldump"`
+
+	PostgresCmd string `default:"psql"`
+	PostgresDumpCmd string `default:"pg_dump"`
 
 	MySQL struct {
 		Host     string `default:"127.0.0.1"`
