@@ -5,8 +5,6 @@ import "time"
 const (
 	SentryTimeout time.Duration = 10
 
-	DataBaseDriverName string = "mysql"
-
 	DefaultDatabaseCharacterSet string = "utf8"
 
 	TmpDirectory string = "/tmp/khazen"
@@ -37,5 +35,12 @@ var Config = struct {
 		User     string `default:"root"`
 		Password string `required:"true"`
 		Port     string `default:"3306"`
+	}
+
+	Postgres struct {
+		Host     string `default:"127.0.0.1"`
+		User     string `default:"postgres"`
+		Password string `required:"true"`
+		Port     string `default:"5432"`
 	}
 }{}

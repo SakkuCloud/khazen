@@ -19,3 +19,11 @@ mysql:
   // required
   password: passwd
   port: 3306
+
+postgres:
+  host: host-address
+  // must have root privileges
+  user: user
+  // required
+  password: passwd
+  port: 5432

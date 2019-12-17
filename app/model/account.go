@@ -30,3 +30,23 @@ func (account *MySQLAccount) GetCreateQuery() (query string) {
 	query = query + " MAX_USER_CONNECTIONS " + account.MaxUserConnections
 	return
 }
+
+type PostgresAccount struct {
+	Username        string `json:"username"`
+	Password        string `json:"password"`
+	ConnectionLimit string `json:"connection_limit"`
+}
+
+func (account *PostgresAccount) HasRequirements() bool {
+	if account.Username == "" || account.Password == "" || account.ConnectionLimit == "" {
+		return false
+	}
+	return true
+}
+
+func (account *PostgresAccount) GetCreateQuery() (query string) {
+	query = "CREATE ROLE " + account.Username
+	query = query + " WITH ENCRYPTED PASSWORD '" + account.Password + "'"
+	query = query + " LOGIN CONNECTION LIMIT " + account.ConnectionLimit
+	return
+}
