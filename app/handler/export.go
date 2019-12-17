@@ -35,9 +35,9 @@ func ExportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if config.Config.UseSakkuService {
+	if config.Config.UseSakkuUploadFileService {
 		sakkuUserId := r.FormValue("sakku_user_id")
-		if err:= service.SakkuUploadFile(tempFile.Name(),sakkuUserId,databaseName); err != nil {
+		if err := service.UploadFile(config.SakkuUploadFileKeyFile, tempFile.Name(), config.SakkuUploadFileEndpoint+sakkuUserId, databaseName); err != nil {
 			log.Warnf("Cannot upload file to sakku in ExportMySQLDatabase, %s", err.Error())
 			respondMessage(w, http.StatusInternalServerError, "Cannot upload file to sakku")
 			_ = os.Remove(tempFile.Name())

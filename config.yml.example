@@ -3,7 +3,6 @@ logfile: /var/log/khazen.log
 
 sentrydsn: dsn-url
 
-usesakkuservice
 mysqlcmd
 mysqldumpcmd
 

@@ -12,6 +12,9 @@ const (
 	ImportMaxFile        int64  = 100 * 1024 * 1024 // 100MB
 	ImportFileKey        string = "import_file"
 	ImportTmpFilePattern string = "import-*.sql"
+
+	SakkuUploadFileEndpoint        string = "https://api.sakku.cloud/file/user/"
+	SakkuUploadFileKeyFile         string = "file"
 )
 
 var StartTime time.Time
@@ -25,7 +28,7 @@ var Config = struct {
 	AccessKey string `required:"true"`
 	SecretKey string `required:"true"`
 
-	UseSakkuService bool `default:"false"`
+	UseSakkuUploadFileService bool `default:"false"`
 
 	MySQLCmd     string `default:"mysql"`
 	MySQLDumpCmd string `default:"mysqldump"`
@@ -42,5 +45,10 @@ var Config = struct {
 		User     string `default:"postgres"`
 		Password string `required:"true"`
 		Port     string `default:"5432"`
+	}
+
+	SakkuUploadFile struct {
+		Service    string `required:"true"`
+		ServiceKey string `required:"true"`
 	}
 }{}
