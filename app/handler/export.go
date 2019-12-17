@@ -31,6 +31,7 @@ func ExportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if err := service.OSCommandExecute(cmd); err != nil {
 		log.Warnf("Cannot export to tmp file in ExportMySQLDatabase, %s", err.Error())
 		respondMessage(w, http.StatusInternalServerError, "Cannot export file")
+		_ = os.Remove(tempFile.Name())
 		return
 	}
 

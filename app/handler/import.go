@@ -52,6 +52,7 @@ func ImportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Warnf("Cannot write to tmp file in ImportMySQLDatabase, %s", err.Error())
 		respondMessage(w, http.StatusInternalServerError, "Cannot write file")
+		_ = os.Remove(tempFile.Name())
 		return
 	}
 
@@ -59,6 +60,7 @@ func ImportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if err := service.OSCommandExecute(cmd); err != nil {
 		log.Warnf("Cannot import tmp file in ImportMySQLDatabase, %s", err.Error())
 		respondMessage(w, http.StatusInternalServerError, "Cannot import file")
+		_ = os.Remove(tempFile.Name())
 		return
 	}
 
