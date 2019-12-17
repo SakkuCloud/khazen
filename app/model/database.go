@@ -35,3 +35,30 @@ func (database *MySQLDatabase) GetDeleteQuery() (query string) {
 	query = "DROP DATABASE IF EXISTS " + database.Database
 	return
 }
+
+type PostgresDatabase struct {
+	Username     string `json:"username"`
+	Database     string `json:"database"`
+}
+
+func (database *PostgresDatabase) HasRequirements() bool {
+	if database.Username == "" || database.Database == "" {
+		return false
+	}
+	return true
+}
+
+func (database *PostgresDatabase) GetCreateQuery() (query string) {
+	query = "CREATE DATABASE " + database.Database
+	return
+}
+
+func (database *PostgresDatabase) GetSetPrivilegesQuery() (query string) {
+	query = "GRANT ALL PRIVILEGES ON DATABASE " + database.Database + " TO " + database.Username
+	return
+}
+
+func (database *PostgresDatabase) GetDeleteQuery() (query string) {
+	query = "DROP DATABASE " + database.Database
+	return
+}

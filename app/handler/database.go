@@ -61,3 +61,54 @@ func DeleteMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	log.Infof("Mysql database deleted, %s", database.Database)
 	respondJSON(w, http.StatusNoContent, nil)
 }
+
+func CreatePostgresDatabase(w http.ResponseWriter, r *http.Request) {
+	database := model.PostgresDatabase{}
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&database); err != nil {
+		log.Warnf("Cannot decode postgres database object in CreatePostgresDatabase, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot decode object")
+		return
+	}
+	defer r.Body.Close()
+
+	if !database.HasRequirements() {
+		log.Warnf("Invalid args in CreatePostgresDatabase request")
+		respondMessage(w, http.StatusBadRequest, "Invalid args request")
+		return
+	}
+
+	if err := service.PostgresDatabaseExecute(database.GetCreateQuery()); err != nil {
+		log.Warnf("Cannot create postgres database, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot create postgres database")
+		return
+	}
+
+	if err := service.PostgresDatabaseExecute(database.GetSetPrivilegesQuery()); err != nil {
+		log.Warnf("Cannot set privileges in database, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot set privileges in database")
+		return
+	}
+
+	log.Infof("Postgres database created, %s", database.Database)
+	respondJSON(w, http.StatusCreated, database)
+}
+
+func DeletePostgresDatabase(w http.ResponseWriter, r *http.Request) {
+	databaseName := mux.Vars(r)["name"]
+	if databaseName == "" {
+		log.Warnf("Invalid request, empty postgres database name in DeletePostgresDatabase")
+		respondMessage(w, http.StatusBadRequest, "Invalid request, empty postgres database name")
+		return
+	}
+
+	database := model.PostgresDatabase{Database: databaseName}
+	if err := service.PostgresDatabaseExecute(database.GetDeleteQuery()); err != nil {
+		log.Warnf("Cannot delete postgres database, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot delete postgres database")
+		return
+	}
+
+	log.Infof("Postgres database deleted, %s", database.Database)
+	respondJSON(w, http.StatusNoContent, nil)
+}

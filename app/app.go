@@ -41,6 +41,8 @@ func (a *App) setRouters() {
 	APISubRouter.HandleFunc("/mysql/export/{name}", a.ExportMySQLDatabase).Methods(http.MethodGet)
 
 	APISubRouter.HandleFunc("/postgres/account", a.CreatePostgresAccount).Methods(http.MethodPost)
+	APISubRouter.HandleFunc("/postgres/database", a.CreatePostgresDatabase).Methods(http.MethodPost)
+	APISubRouter.HandleFunc("/postgres/database/{name}", a.DeletePostgresDatabase).Methods(http.MethodDelete)
 }
 
 // HEALTH
@@ -54,7 +56,6 @@ func (a *App) CreateMySQLAccount(w http.ResponseWriter, r *http.Request) {
 		handler.CreateMySQLAccount(w, r)
 	}
 }
-
 func (a *App) CreateMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.CreateMySQLDatabase(w, r)
@@ -65,19 +66,16 @@ func (a *App) DeleteMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 		handler.DeleteMySQLDatabase(w, r)
 	}
 }
-
 func (a *App) ExecMySQLBundle(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.ExecMySQLBundle(w, r)
 	}
 }
-
 func (a *App) ImportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.ImportMySQLDatabase(w, r)
 	}
 }
-
 func (a *App) ExportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.ExportMySQLDatabase(w, r)
@@ -88,6 +86,16 @@ func (a *App) ExportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 func (a *App) CreatePostgresAccount(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.CreatePostgresAccount(w, r)
+	}
+}
+func (a *App) CreatePostgresDatabase(w http.ResponseWriter, r *http.Request) {
+	if handler.IsAuthorized(w, r, a.Auth) {
+		handler.CreatePostgresDatabase(w, r)
+	}
+}
+func (a *App) DeletePostgresDatabase(w http.ResponseWriter, r *http.Request) {
+	if handler.IsAuthorized(w, r, a.Auth) {
+		handler.DeletePostgresDatabase(w, r)
 	}
 }
 
