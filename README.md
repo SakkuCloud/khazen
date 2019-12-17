@@ -13,10 +13,13 @@ Khazen (خازن in Persian) means Treasury Guardian.
   * [Delete MySQL database](https://github.com/SakkuCloud/khazen#mysql-delete-database)
   * [Execute MySQL bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
   * [Import MySQL database](https://github.com/SakkuCloud/khazen#mysql-import-database)
+  * [Export MySQL database](https://github.com/SakkuCloud/khazen#mysql-export-database)
   * [Create Postgres account](https://github.com/SakkuCloud/khazen#postgres-create-account)
   * [Create Postgres database](https://github.com/SakkuCloud/khazen#postgres-create-database)
   * [Delete Postgres database](https://github.com/SakkuCloud/khazen#postgres-delete-database)
   * [Execute Postgres bundle](https://github.com/SakkuCloud/khazen#postgres-execute-bundle)
+  * [Import Postgres database](https://github.com/SakkuCloud/khazen#postgres-import-database)
+  * [Export Postgres database](https://github.com/SakkuCloud/khazen#postgres-export-database)
   * [Health](https://github.com/SakkuCloud/khazen#health)
 * [To do](https://github.com/SakkuCloud/khazen#to-do)
 
@@ -179,6 +182,16 @@ curl -X POST \
   -F import_file=@<address/of/file>
 ```
 
+### MySQL Export database
+Exports database from file in MySQL database server. A complete curl requests shown below.
+**NOTE:** This endpoint use mysqldump cmd instead of go mysql driver.
+```sh
+curl -X GET \
+  https://khazen.sakku.cloud/api/mysql/export/<name-of-database> \
+  -H 'service: my-awesome-accesss' \
+  -H 'service-key:  Super$3crT' 
+```
+
 ### Postgres create account
 Creates account in Postgres database server. A complete curl requests shown below. All json attributes except are required.
 ```sh
@@ -239,6 +252,28 @@ curl -X POST \
 }
 }
 '
+```
+
+### Postgres Import database
+Imports database from file in Postgres database server. A complete curl requests shown below.
+**NOTE:** This endpoint use postgres cmd instead of go postgres driver.
+```sh
+curl -X POST \
+  https://khazen.sakku.cloud/api/postgres/import/<name-of-database> \
+  -H 'Content-Type: multipart/form-data; boundary=--------------------------644186194979441205884304' \
+  -H 'service: my-awesome-accesss' \
+  -H 'service-key:  Super$3crT' \
+  -F import_file=@<address/of/file>
+```
+
+### Postgres Export database
+Exports database from file in Postgres database server. A complete curl requests shown below.
+**NOTE:** This endpoint use pg_dump cmd instead of go postgres driver.
+```sh
+curl -X GET \
+  https://khazen.sakku.cloud/api/postgres/export/<name-of-database> \
+  -H 'service: my-awesome-accesss' \
+  -H 'service-key:  Super$3crT' 
 ```
 
 ### Health
