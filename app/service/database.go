@@ -7,11 +7,11 @@ import (
 	"khazen/config"
 )
 
-func DatabaseExecute(query string) (err error) {
+func MySQLDatabaseExecute(query string) (err error) {
 	var db *sql.DB
 	var res sql.Result
 
-	db, err = sql.Open(config.DataBaseDriverName, getDatabaseURI())
+	db, err = sql.Open(config.DataBaseDriverName, getMySQLDatabaseURI())
 	if err == nil {
 		defer db.Close()
 
@@ -27,7 +27,7 @@ func DatabaseExecute(query string) (err error) {
 	return
 }
 
-func getDatabaseURI() (dbURI string) {
+func getMySQLDatabaseURI() (dbURI string) {
 	dbURI = fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8&parseTime=True",
 		config.Config.MySQL.User,
 		config.Config.MySQL.Password,

@@ -25,7 +25,7 @@ func CreateMySQLAccount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := service.DatabaseExecute(account.GetCreateQuery()); err != nil {
+	if err := service.MySQLDatabaseExecute(account.GetCreateQuery()); err != nil {
 		log.Warnf("Cannot create mysql account, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create mysql account")
 		return
