@@ -11,3 +11,15 @@ func (bundle *MySQLBundle) HasRequirements() bool {
 	}
 	return true
 }
+
+type PostgresBundle struct {
+	Account  *PostgresAccount  `json:"account"`
+	Database *PostgresDatabase `json:"database"`
+}
+
+func (bundle *PostgresBundle) HasRequirements() bool {
+	if !bundle.Account.HasRequirements() || !bundle.Database.HasRequirements() {
+		return false
+	}
+	return true
+}

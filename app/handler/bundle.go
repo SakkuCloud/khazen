@@ -47,3 +47,41 @@ func ExecMySQLBundle(w http.ResponseWriter, r *http.Request) {
 	log.Infof("Mysql bundle executed, %s", mysql.Account.Username)
 	respondJSON(w, http.StatusCreated, mysql)
 }
+
+func ExecPostgresBundle(w http.ResponseWriter, r *http.Request) {
+	postgres := model.PostgresBundle{}
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&postgres); err != nil {
+		log.Infof("Cannot decode postgres bundle object in ExecPostgresBundle, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot decode object")
+		return
+	}
+	defer r.Body.Close()
+
+	if !postgres.HasRequirements() {
+		log.Warnf("Invalid args in ExecPostgresBundle request")
+		respondMessage(w, http.StatusBadRequest, "Invalid args request")
+		return
+	}
+
+	if err := service.PostgresDatabaseExecute(postgres.Account.GetCreateQuery()); err != nil {
+		log.Warnf("Cannot create account in exec postgres bundle, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot create account in exec postgres bundle")
+		return
+	}
+
+	if err := service.PostgresDatabaseExecute(postgres.Database.GetCreateQuery()); err != nil {
+		log.Warnf("Cannot create database in exec postgres bundle, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot create database in exec postgres bundle")
+		return
+	}
+
+	if err := service.PostgresDatabaseExecute(postgres.Database.GetSetPrivilegesQuery()); err != nil {
+		log.Warnf("Cannot set privileges in exec postgres bundle, %s", err.Error())
+		respondMessage(w, http.StatusBadRequest, "Cannot set privileges in exec postgres bundle")
+		return
+	}
+
+	log.Infof("Postgres bundle executed, %s", postgres.Account.Username)
+	respondJSON(w, http.StatusCreated, postgres)
+}
