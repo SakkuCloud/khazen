@@ -192,6 +192,30 @@ curl -X POST \
 '
 ```
 
+### Postgres Create database
+Creates database in MySQL database server and set full privilege for user on this database. A complete curl requests shown below. All json attributes except *character_set* are required.
+```sh
+curl -X POST \
+ https://khazen.sakku.cloud/api/postgres/database \
+ -H 'Content-Type: application/json' \
+ -H 'service: my-awesome-accesss' \
+ -H 'service-key: Super$3crT' \
+ -d '{
+"username":"test_user_for_new_method_3",
+"database":"db_test_new_method_3"
+}
+'
+```
+
+### Postgres Delete database
+Deletes database in MySQL database server. A complete curl requests shown below.
+```sh
+curl -X DELETE \
+ https://khazen.sakku.cloud/api/postgres/database/<name-of-database> \
+ -H 'service: my-awesome-accesss' \
+ -H 'service-key: Super$3crT' \
+```
+
 ### Health
 Get Server health (status, uptime and server time).
 ```sh
