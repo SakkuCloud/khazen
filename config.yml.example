@@ -3,6 +3,10 @@ logfile: /var/log/khazen.log
 
 sentrydsn: dsn-url
 
+usesakkuservice
+mysqlcmd
+mysqldumpcmd
+
 // required
 accesskey: my-awesome-access
 // required
