@@ -14,12 +14,14 @@ Khazen (خازن in Persian) means Treasury Guardian.
   * [Execute MySQL bundle](https://github.com/SakkuCloud/khazen#mysql-execute-bundle)
   * [Import MySQL database](https://github.com/SakkuCloud/khazen#mysql-import-database)
   * [Export MySQL database](https://github.com/SakkuCloud/khazen#mysql-export-database)
+  * [Query MySQL database](https://github.com/SakkuCloud/khazen#mysql-query)
   * [Create Postgres account](https://github.com/SakkuCloud/khazen#postgres-create-account)
   * [Create Postgres database](https://github.com/SakkuCloud/khazen#postgres-create-database)
   * [Delete Postgres database](https://github.com/SakkuCloud/khazen#postgres-delete-database)
   * [Execute Postgres bundle](https://github.com/SakkuCloud/khazen#postgres-execute-bundle)
   * [Import Postgres database](https://github.com/SakkuCloud/khazen#postgres-import-database)
   * [Export Postgres database](https://github.com/SakkuCloud/khazen#postgres-export-database)
+  * [Query Postgres database](https://github.com/SakkuCloud/khazen#postgres-query)
   * [Health](https://github.com/SakkuCloud/khazen#health)
 * [To do](https://github.com/SakkuCloud/khazen#to-do)
 
@@ -192,6 +194,23 @@ curl -X GET \
   -H 'service-key:  Super$3crT' 
 ```
 
+### MySQL Query
+Execute query in MySQL database server. A complete curl requests shown below. All json attributes except *query_type* is required. *query_type=1* for select queries and *query_type=2* for non select queries.
+```sh
+curl -X POST \
+ https://khazen.sakku.cloud/api/mysql/query/<name-of-database> \
+ -H 'Content-Type: application/json' \
+ -H 'service: my-awesome-accesss' \
+ -H 'service-key: Super$3crT' \
+ -d '{
+"username":"test_user_for_new_method_3",
+"password":"sdsdf_234234mn_234r_3",
+"query_string":"select * from test",
+"query_type":1
+}
+'
+```
+
 ### Postgres create account
 Creates account in Postgres database server. A complete curl requests shown below. All json attributes except are required.
 ```sh
@@ -276,16 +295,26 @@ curl -X GET \
   -H 'service-key:  Super$3crT' 
 ```
 
+### Postgres Query
+Execute query in Postgres database server. A complete curl requests shown below. All json attributes except *query_type* is required. *query_type=1* for select queries and *query_type=2* for non select queries.
+```sh
+curl -X POST \
+ https://khazen.sakku.cloud/api/postgres/query/<name-of-database> \
+ -H 'Content-Type: application/json' \
+ -H 'service: my-awesome-accesss' \
+ -H 'service-key: Super$3crT' \
+ -d '{
+"username":"test_user_for_new_method_3",
+"password":"sdsdf_234234mn_234r_3",
+"query_string":"select * from test",
+"query_type":1
+}
+'
+```
+
 ### Health
 Get Server health (status, uptime and server time).
 ```sh
 curl -X GET \
  https://khazen.sakku.cloud/api/health 
 ```
-
-# To do
-* Update account attributes
-* Delete account
-* Delete database
-* Set privilege endpoint
-* Add import/export
