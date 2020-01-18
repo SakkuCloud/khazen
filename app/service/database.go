@@ -9,7 +9,7 @@ import (
 	"khazen/config"
 )
 
-func MySQLDatabaseExecute(query string, db string) (queryResult *model.MySQLQueryResult, err error) {
+func MySQLDatabaseExecute(query string, db string) (queryResult *model.QueryResult, err error) {
 	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True",
 		config.Config.MySQL.User,
 		config.Config.MySQL.Password,
@@ -20,7 +20,7 @@ func MySQLDatabaseExecute(query string, db string) (queryResult *model.MySQLQuer
 	return
 }
 
-func MySQLDatabaseQuery(query string, db string) (queryResult *model.MySQLQueryResult, err error) {
+func MySQLDatabaseQuery(query string, db string) (queryResult *model.QueryResult, err error) {
 	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True",
 		config.Config.MySQL.User,
 		config.Config.MySQL.Password,
@@ -31,20 +31,32 @@ func MySQLDatabaseQuery(query string, db string) (queryResult *model.MySQLQueryR
 	return
 }
 
-func PostgresDatabaseExecute(query string) (queryResult *model.MySQLQueryResult, err error) {
-	dbURI := fmt.Sprintf("postgres://%s:%s@%s:%s/?sslmode=disable",
+func PostgresDatabaseExecute(query string, db string) (queryResult *model.QueryResult, err error) {
+	dbURI := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		config.Config.Postgres.User,
 		config.Config.Postgres.Password,
 		config.Config.Postgres.Host,
-		config.Config.Postgres.Port)
+		config.Config.Postgres.Port,
+		db)
 	queryResult, err = databaseExecute("postgres", query, dbURI)
 	return
 }
 
-func databaseExecute(driver string, query string, uri string) (queryResult *model.MySQLQueryResult, err error) {
+func PostgresDatabaseQuery(query string, db string) (queryResult *model.QueryResult, err error) {
+	dbURI := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		config.Config.Postgres.User,
+		config.Config.Postgres.Password,
+		config.Config.Postgres.Host,
+		config.Config.Postgres.Port,
+		db)
+	queryResult, err = databaseQuery("postgres", query, dbURI)
+	return
+}
+
+func databaseExecute(driver string, query string, uri string) (queryResult *model.QueryResult, err error) {
 	var db *sql.DB
 	var res sql.Result
-	queryResult = &model.MySQLQueryResult{}
+	queryResult = &model.QueryResult{}
 	log.Debugf("Database execute in %s = %s",driver,query)
 
 	db, err = sql.Open(driver, uri)
@@ -61,10 +73,10 @@ func databaseExecute(driver string, query string, uri string) (queryResult *mode
 	return
 }
 
-func databaseQuery(driver string, query string, uri string) (queryResult *model.MySQLQueryResult, err error) {
+func databaseQuery(driver string, query string, uri string) (queryResult *model.QueryResult, err error) {
 	var db *sql.DB
 	var rows *sql.Rows
-	queryResult = &model.MySQLQueryResult{}
+	queryResult = &model.QueryResult{}
 	log.Debugf("Database query in %s = %s",driver,query)
 
 	db, err = sql.Open(driver, uri)

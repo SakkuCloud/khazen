@@ -1,20 +1,20 @@
 package model
 
-type MySQLQuery struct {
+type Query struct {
 	Username    string `json:"username"`
 	Password    string `json:"password"`
 	QueryString string `json:"query_string"`
 	QueryType   int    `json:"query_type"`
 }
 
-type MySQLQueryResult struct {
+type QueryResult struct {
 	Columns      []string   `json:"columns"`
 	Rows         [][]string `json:"rows"`
 	RowsAffected int64      `json:"rows_affected"`
 	LastInsertId int64      `json:"last_insert_id"`
 }
 
-func (query *MySQLQuery) HasRequirements() bool {
+func (query *Query) HasRequirements() bool {
 	if query.Username == "" || query.Password == "" || query.QueryString == "" {
 		return false
 	}

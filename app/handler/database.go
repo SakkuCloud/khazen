@@ -78,13 +78,13 @@ func CreatePostgresDatabase(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if _, err := service.PostgresDatabaseExecute(database.GetCreateQuery()); err != nil {
+	if _, err := service.PostgresDatabaseExecute(database.GetCreateQuery(),""); err != nil {
 		log.Warnf("Cannot create postgres database, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create postgres database")
 		return
 	}
 
-	if _, err := service.PostgresDatabaseExecute(database.GetSetPrivilegesQuery()); err != nil {
+	if _, err := service.PostgresDatabaseExecute(database.GetSetPrivilegesQuery(),""); err != nil {
 		log.Warnf("Cannot set privileges in database, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot set privileges in database")
 		return
@@ -103,7 +103,7 @@ func DeletePostgresDatabase(w http.ResponseWriter, r *http.Request) {
 	}
 
 	database := model.PostgresDatabase{Database: databaseName}
-	if _, err := service.PostgresDatabaseExecute(database.GetDeleteQuery()); err != nil {
+	if _, err := service.PostgresDatabaseExecute(database.GetDeleteQuery(),""); err != nil {
 		log.Warnf("Cannot delete postgres database, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot delete postgres database")
 		return

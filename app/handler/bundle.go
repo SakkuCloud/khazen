@@ -64,19 +64,19 @@ func ExecPostgresBundle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if _, err := service.PostgresDatabaseExecute(postgres.Account.GetCreateQuery()); err != nil {
+	if _, err := service.PostgresDatabaseExecute(postgres.Account.GetCreateQuery(),""); err != nil {
 		log.Warnf("Cannot create account in exec postgres bundle, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create account in exec postgres bundle")
 		return
 	}
 
-	if _, err := service.PostgresDatabaseExecute(postgres.Database.GetCreateQuery()); err != nil {
+	if _, err := service.PostgresDatabaseExecute(postgres.Database.GetCreateQuery(),""); err != nil {
 		log.Warnf("Cannot create database in exec postgres bundle, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create database in exec postgres bundle")
 		return
 	}
 
-	if _, err := service.PostgresDatabaseExecute(postgres.Database.GetSetPrivilegesQuery()); err != nil {
+	if _, err := service.PostgresDatabaseExecute(postgres.Database.GetSetPrivilegesQuery(),""); err != nil {
 		log.Warnf("Cannot set privileges in exec postgres bundle, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot set privileges in exec postgres bundle")
 		return
