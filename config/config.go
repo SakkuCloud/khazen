@@ -5,16 +5,19 @@ import "time"
 const (
 	SentryTimeout time.Duration = 10
 
-	DefaultDatabaseCharacterSet string = "utf8"
+	DefaultDatabaseCharacterSet = "utf8"
 
-	TmpDirectory string = "/tmp/khazen"
+	TmpDirectory = "/tmp/khazen"
 
-	ImportMaxFile        int64  = 100 * 1024 * 1024 // 100MB
-	ImportFileKey        string = "import_file"
-	ImportTmpFilePattern string = "import-*.sql"
+	ImportMaxFile        int64 = 100 * 1024 * 1024 // 100MB
+	ImportFileKey              = "import_file"
+	ImportTmpFilePattern       = "import-*.sql"
 
-	SakkuUploadFileEndpoint string = "http://api.sakku.cloud/file/user/"
-	SakkuUploadFileKeyFile  string = "file"
+	SakkuUploadFileEndpoint = "http://api.sakku.cloud/file/user/"
+	SakkuUploadFileKeyFile  = "file"
+
+	QueryTypeSelect    = 1
+	QueryTypeNonSelect = 2
 )
 
 var StartTime time.Time
@@ -33,7 +36,7 @@ var Config = struct {
 	MySQLCmd     string `default:"mysql"`
 	MySQLDumpCmd string `default:"mysqldump"`
 
-	PostgresCmd string `default:"psql"`
+	PostgresCmd     string `default:"psql"`
 	PostgresDumpCmd string `default:"pg_dump"`
 
 	MySQL struct {

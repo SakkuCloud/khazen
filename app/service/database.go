@@ -5,44 +5,91 @@ import (
 	"fmt"
 	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"
+	"khazen/app/model"
 	"khazen/config"
 )
 
-func MySQLDatabaseExecute(query string) (err error) {
-	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8&parseTime=True",
+func MySQLDatabaseExecute(query string, db string) (queryResult *model.MySQLQueryResult, err error) {
+	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True",
 		config.Config.MySQL.User,
 		config.Config.MySQL.Password,
 		config.Config.MySQL.Host,
-		config.Config.MySQL.Port)
-	err = databaseExecute("mysql", query, dbURI)
+		config.Config.MySQL.Port,
+		db)
+	queryResult, err = databaseExecute("mysql", query, dbURI)
 	return
 }
 
-func PostgresDatabaseExecute(query string) (err error) {
+func MySQLDatabaseQuery(query string, db string) (queryResult *model.MySQLQueryResult, err error) {
+	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True",
+		config.Config.MySQL.User,
+		config.Config.MySQL.Password,
+		config.Config.MySQL.Host,
+		config.Config.MySQL.Port,
+		db)
+	queryResult, err = databaseQuery("mysql", query, dbURI)
+	return
+}
+
+func PostgresDatabaseExecute(query string) (queryResult *model.MySQLQueryResult, err error) {
 	dbURI := fmt.Sprintf("postgres://%s:%s@%s:%s/?sslmode=disable",
 		config.Config.Postgres.User,
 		config.Config.Postgres.Password,
 		config.Config.Postgres.Host,
 		config.Config.Postgres.Port)
-	err = databaseExecute("postgres", query, dbURI)
+	queryResult, err = databaseExecute("postgres", query, dbURI)
 	return
 }
 
-func databaseExecute(driver string, query string, uri string) (err error) {
+func databaseExecute(driver string, query string, uri string) (queryResult *model.MySQLQueryResult, err error) {
 	var db *sql.DB
 	var res sql.Result
+	queryResult = &model.MySQLQueryResult{}
+	log.Debugf("Database execute in %s = %s",driver,query)
 
 	db, err = sql.Open(driver, uri)
 	if err == nil {
 		defer db.Close()
-
-		log.Debug(query)
 		res, err = db.Exec(query)
 		if res != nil {
-			rowsNo, _ := res.RowsAffected()
-			lastInsertId, _ := res.LastInsertId()
-			log.Debugf("rows affected: %d", rowsNo)
-			log.Debugf("last insert id: %d", lastInsertId)
+			queryResult.RowsAffected, _ = res.RowsAffected()
+			queryResult.LastInsertId, _ = res.LastInsertId()
+			log.Debugf("rows affected: %d", queryResult.RowsAffected)
+			log.Debugf("last insert id: %d", queryResult.LastInsertId)
+		}
+	}
+	return
+}
+
+func databaseQuery(driver string, query string, uri string) (queryResult *model.MySQLQueryResult, err error) {
+	var db *sql.DB
+	var rows *sql.Rows
+	queryResult = &model.MySQLQueryResult{}
+	log.Debugf("Database query in %s = %s",driver,query)
+
+	db, err = sql.Open(driver, uri)
+	if err == nil {
+		defer db.Close()
+		rows, err = db.Query(query)
+		if err == nil {
+			queryResult.Columns, err = rows.Columns()
+			if err == nil {
+				for rows.Next() {
+					readCols := make([]interface{}, len(queryResult.Columns))
+					row := make([]string, len(queryResult.Columns))
+					for i, _ := range row {
+						readCols[i] = &row[i]
+					}
+
+					err := rows.Scan(readCols...)
+					if err != nil {
+						break
+					}
+					log.Debug(row)
+
+					queryResult.Rows = append(queryResult.Rows,row)
+				}
+			}
 		}
 	}
 	return

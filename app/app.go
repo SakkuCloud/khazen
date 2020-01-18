@@ -39,6 +39,7 @@ func (a *App) setRouters() {
 	APISubRouter.HandleFunc("/mysql/database/{name}", a.DeleteMySQLDatabase).Methods(http.MethodDelete)
 	APISubRouter.HandleFunc("/mysql/import/{name}", a.ImportMySQLDatabase).Methods(http.MethodPost)
 	APISubRouter.HandleFunc("/mysql/export/{name}", a.ExportMySQLDatabase).Methods(http.MethodGet)
+	APISubRouter.HandleFunc("/mysql/query/{name}", a.QueryMySQLDatabase).Methods(http.MethodPost)
 
 	APISubRouter.HandleFunc("/postgres/bundle", a.ExecPostgresBundle).Methods(http.MethodPost)
 	APISubRouter.HandleFunc("/postgres/account", a.CreatePostgresAccount).Methods(http.MethodPost)
@@ -82,6 +83,11 @@ func (a *App) ImportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 func (a *App) ExportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 	if handler.IsAuthorized(w, r, a.Auth) {
 		handler.ExportMySQLDatabase(w, r)
+	}
+}
+func (a *App) QueryMySQLDatabase(w http.ResponseWriter, r *http.Request) {
+	if handler.IsAuthorized(w, r, a.Auth) {
+		handler.QueryMySQLDatabase(w, r)
 	}
 }
 

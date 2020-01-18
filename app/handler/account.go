@@ -25,7 +25,7 @@ func CreateMySQLAccount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := service.MySQLDatabaseExecute(account.GetCreateQuery()); err != nil {
+	if _, err := service.MySQLDatabaseExecute(account.GetCreateQuery(),""); err != nil {
 		log.Warnf("Cannot create mysql account, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create mysql account")
 		return
@@ -51,7 +51,7 @@ func CreatePostgresAccount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := service.PostgresDatabaseExecute(account.GetCreateQuery()); err != nil {
+	if _, err := service.PostgresDatabaseExecute(account.GetCreateQuery()); err != nil {
 		log.Warnf("Cannot create postgres account, %s", err.Error())
 		respondMessage(w, http.StatusBadRequest, "Cannot create postgres account")
 		return
