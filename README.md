@@ -1,6 +1,6 @@
 # Khazen - A web service to work with SQL database server
 
-Khazen is a web service that manages SQL databases such as MySQL.
+Khazen is a web service that manages SQL databases such as MySQL and Postgres.
 Khazen (خازن in Persian) means Treasury Guardian.
 
 # Contents
@@ -52,7 +52,7 @@ Khazen uses some options. These options are listed below.
 key   | name        | default                |
 ----- | ----------- | ---------------------- |
 debug | Debug Mode  | false                  |
-| c     | Config File | /etc/khazen/config.yml |
+c     | Config File | /etc/khazen/config.yml |
 
 For production, it's better to use a Systemd service to run Khazen.
 A simple Systemd service shown below. Save this in `/lib/systemd/system/khazen.service` 
