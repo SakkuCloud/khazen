@@ -39,7 +39,7 @@ func ExportMySQLDatabase(w http.ResponseWriter, r *http.Request) {
 		sakkuUserId := r.FormValue("sakku_user_id")
 		if err := service.UploadFile(config.SakkuUploadFileKeyFile, tempFile.Name(), config.SakkuUploadFileEndpoint+sakkuUserId, databaseName); err != nil {
 			log.Warnf("Cannot upload file to sakku in ExportMySQLDatabase, %s", err.Error())
-			respondMessage(w, http.StatusInternalServerError, "Cannot upload file to sakku")
+			respondMessage(w, http.StatusInternalServerError, "Cannot upload file to sakku for "+databaseName+" database for user "+sakkuUserId)
 			_ = os.Remove(tempFile.Name())
 			return
 		}
@@ -78,7 +78,7 @@ func ExportPostgresDatabase(w http.ResponseWriter, r *http.Request) {
 		sakkuUserId := r.FormValue("sakku_user_id")
 		if err := service.UploadFile(config.SakkuUploadFileKeyFile, tempFile.Name(), config.SakkuUploadFileEndpoint+sakkuUserId, databaseName); err != nil {
 			log.Warnf("Cannot upload file to sakku in ExportPostgresDatabase, %s", err.Error())
-			respondMessage(w, http.StatusInternalServerError, "Cannot upload file to sakku")
+			respondMessage(w, http.StatusInternalServerError, "Cannot upload file to sakku for "+databaseName+" database for user "+sakkuUserId)
 			_ = os.Remove(tempFile.Name())
 			return
 		}

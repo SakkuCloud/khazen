@@ -13,7 +13,7 @@ const (
 	ImportFileKey              = "import_file"
 	ImportTmpFilePattern       = "import-*.sql"
 
-	SakkuUploadFileEndpoint = "http://api.sakku.cloud/file/user/"
+	SakkuUploadFileEndpoint = "https://api.sakku.cloud/file/user/"
 	SakkuUploadFileKeyFile  = "file"
 
 	QueryTypeSelect    = 1
