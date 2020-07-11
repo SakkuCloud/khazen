@@ -1,6 +1,9 @@
 package model
 
-import "khazen/config"
+import (
+	"khazen/util"
+	"khazen/config"
+)
 
 type MySQLDatabase struct {
 	Username     string `json:"username"`
@@ -10,6 +13,9 @@ type MySQLDatabase struct {
 
 func (database *MySQLDatabase) HasRequirements() bool {
 	if database.Username == "" || database.Database == "" {
+		return false
+	}
+	if util.ArrayContains(config.ForbidenMySQLDatabaseNames,database.Database) {
 		return false
 	}
 	return true
@@ -43,6 +49,9 @@ type PostgresDatabase struct {
 
 func (database *PostgresDatabase) HasRequirements() bool {
 	if database.Username == "" || database.Database == "" {
+		return false
+	}
+	if util.ArrayContains(config.ForbidenPostgresDatabaseNames,database.Database) {
 		return false
 	}
 	return true

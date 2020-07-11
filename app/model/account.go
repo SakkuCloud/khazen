@@ -1,6 +1,8 @@
 package model
 
 import (
+	"khazen/config"
+	"khazen/util"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -16,6 +18,9 @@ type MySQLAccount struct {
 
 func (account *MySQLAccount) HasRequirements() bool {
 	if account.Username == "" || account.Password == "" || account.MaxQueriesPerHour == "" || account.MaxUpdatesPerHour == "" || account.MaxConnectionsPerHour == "" || account.MaxUserConnections == "" {
+		return false
+	}
+	if util.ArrayContains(config.ForbidenMySQLUserNames,account.Username) {
 		return false
 	}
 	return true
@@ -39,6 +44,9 @@ type PostgresAccount struct {
 
 func (account *PostgresAccount) HasRequirements() bool {
 	if account.Username == "" || account.Password == "" || account.ConnectionLimit == "" {
+		return false
+	}
+	if util.ArrayContains(config.ForbidenPostgresUserNames,account.Username) {
 		return false
 	}
 	return true

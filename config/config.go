@@ -22,6 +22,42 @@ const (
 
 var StartTime time.Time
 
+var ForbidenMySQLDatabaseNames = []string {
+	"information_schema", 
+	"mysql",
+	"performance_schema",
+	"test",
+	// sakku special
+	"sakku",
+	"sakku_core_db",
+	"sakku_core_db_dev",
+}
+var ForbidenPostgresDatabaseNames = []string {
+	"postgres", 
+	"template2",
+	"template1",
+	"template0",
+	"test",
+	// sakku special
+	"sakku",
+}
+var ForbidenMySQLUserNames = []string {
+	"root", 
+	"mysql",
+	"admin",
+	"test",
+	// sakku special
+	"sakku",
+}
+var ForbidenPostgresUserNames = []string {
+	"postgres", 
+	"root",
+	"admin",
+	"test",
+	// sakku special
+	"sakku",
+}
+
 var Config = struct {
 	Port    string `default:"3000"`
 	LogFile string `default:"/var/log/khazen.log"`
