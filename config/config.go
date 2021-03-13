@@ -13,7 +13,7 @@ const (
 	ImportFileKey              = "import_file"
 	ImportTmpFilePattern       = "import-*.sql"
 
-	SakkuUploadFileEndpoint = "https://api.sakku.cloud/file/user/"
+	SakkuUploadFileEndpoint = "/file/user/"
 	SakkuUploadFileKeyFile  = "file"
 
 	QueryTypeSelect    = 1
@@ -23,7 +23,7 @@ const (
 var StartTime time.Time
 
 var ForbidenMySQLDatabaseNames = []string {
-	"information_schema", 
+	"information_schema",
 	"mysql",
 	"performance_schema",
 	"test",
@@ -66,6 +66,8 @@ var Config = struct {
 
 	AccessKey string `required:"true"`
 	SecretKey string `required:"true"`
+
+	ServerZone string `default:"sakku.cloud"`
 
 	UseSakkuUploadFileService bool `default:"false"`
 
